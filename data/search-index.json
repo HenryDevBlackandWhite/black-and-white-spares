@@ -1,0 +1,60 @@
+[
+  { "term": "Engines", "href": "/products#diesel", "type": "category" },
+  { "term": "Diesel Engines", "href": "/products#diesel", "type": "category" },
+
+  { "term": "Deutz Engines", "href": "/products#deutz", "type": "category" },
+  { "term": "Deutz 913", "href": "/products#deutz", "type": "engine" },
+  { "term": "Deutz 413F", "href": "/products#deutz", "type": "engine" },
+
+  { "term": "Samil Spares", "href": "/products#samil", "type": "category" },
+  { "term": "Samag Spares", "href": "/products#samil", "type": "category" },
+  { "term": "Sakom Spares", "href": "/products#samil", "type": "category" },
+
+  { "term": "Armoured Vehicle Spares", "href": "/products#armoured", "type": "category" },
+  { "term": "Casspir", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Mamba", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Nyala", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Ingwe", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Kwevoel", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Mfezi", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Buffel", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Unimog 416", "href": "/products#armoured", "type": "vehicle" },
+  { "term": "Land Rover 3/3S", "href": "/products#armoured", "type": "vehicle" },
+
+  { "term": "Off-Road Tyres", "href": "/products#tyres", "type": "category" },
+  { "term": "20 inch tyre", "href": "/products#tyres", "type": "part" },
+  { "term": "20 inch rim", "href": "/products#tyres", "type": "part" },
+  { "term": "12.5 R20", "href": "/products#tyres", "type": "tyre" },
+  { "term": "14.5 R20", "href": "/products#tyres", "type": "tyre" },
+
+  { "term": "Sino Truck Spares", "href": "/products#sinotruk", "type": "category" },
+  { "term": "HOWO Spares", "href": "/products#sinotruk", "type": "category" },
+  { "term": "HOWO Engine Parts", "href": "/products#sinotruk", "type": "engine" },
+  { "term": "HOWO Gearbox", "href": "/products#sinotruk", "type": "part" },
+  { "term": "WD615 Engine", "href": "/products#sinotruk", "type": "engine" },
+  { "term": "Sino Truck Turbocharger", "href": "/products#sinotruk", "type": "part" },
+  { "term": "Sino Truck Fuel Pump", "href": "/products#sinotruk", "type": "part" },
+  { "term": "Sino Truck Diff", "href": "/products#sinotruk", "type": "part" },
+  { "term": "Sino Truck Cab Components", "href": "/products#sinotruk", "type": "system" },
+  { "term": "Sino Truck Filters", "href": "/products#sinotruk", "type": "service" },
+
+  { "term": "Sino Plant Spares", "href": "/products#sinoplant", "type": "category" },
+  { "term": "Excavator Parts", "href": "/products#sinoplant", "type": "part" },
+  { "term": "Front End Loader Parts", "href": "/products#sinoplant", "type": "part" },
+  { "term": "Hydraulic Pump", "href": "/products#sinoplant", "type": "part" },
+  { "term": "Swing Motor", "href": "/products#sinoplant", "type": "part" },
+  { "term": "Track Chains", "href": "/products#sinoplant", "type": "part" },
+
+  { "term": "Samil 20", "href": "/products#samil", "type": "vehicle" },
+  { "term": "Samil 50", "href": "/products#samil", "type": "vehicle" },
+  { "term": "Samil 100", "href": "/products#samil", "type": "vehicle" },
+  { "term": "Magirus", "href": "/products#samil", "type": "vehicle" },
+
+  { "term": "Axle", "href": "/products#samil", "type": "system" },
+  { "term": "Diff", "href": "/products#samil", "type": "system" },
+  { "term": "Suspension", "href": "/products#sinotruk", "type": "system" },
+  { "term": "Drivetrain", "href": "/products#samil", "type": "system" }
+]
+
+
+
