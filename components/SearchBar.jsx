@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Fuse from "fuse.js";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,10 +11,14 @@ export default function SearchBar() {
   const [results, setResults] = useState([]);
   const router = useRouter();
 
-  const fuse = new Fuse(indexData, {
-    keys: ["term"],
-    threshold: 0.3
-  });
+  const fuse = useMemo(
+    () =>
+      new Fuse(indexData, {
+        keys: ["term"],
+        threshold: 0.3,
+      }),
+    []
+  );
 
   useEffect(() => {
     if (query.trim() === "") {
@@ -24,12 +28,19 @@ export default function SearchBar() {
 
     const filtered = fuse.search(query).slice(0, 8);
     setResults(filtered);
-  }, [query]);
+  }, [query, fuse]);
 
   function handleKeyDown(e) {
     if (e.key === "Enter") {
+      e.preventDefault();
+
       if (results.length > 0) {
         router.push(results[0].item.href);
+        setQuery("");
+        setResults([]);
+      } else if (query.trim() !== "") {
+        const encoded = encodeURIComponent(query.trim());
+        router.push(`/products?search=${encoded}`); // ← FIXED
         setQuery("");
         setResults([]);
       }
@@ -44,7 +55,6 @@ export default function SearchBar() {
 
   return (
     <div className="relative w-full max-w-lg">
-      {/* Input */}
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -53,7 +63,6 @@ export default function SearchBar() {
         className="w-full px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-600"
       />
 
-      {/* Animated Dropdown */}
       <AnimatePresence>
         {results.length > 0 && (
           <motion.div
@@ -79,6 +88,8 @@ export default function SearchBar() {
     </div>
   );
 }
+
+
 
 
 

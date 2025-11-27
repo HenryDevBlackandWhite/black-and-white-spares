@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation"; 
 
 export default function Products() {
   // =========================================================
@@ -185,6 +186,19 @@ We support the full range of Sino HOWO and A7 truck parts.
     const el = document.getElementById("spare-form");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+
+   // =========================================================
+  // NEW: READ SEARCH TERM FROM URL AND PREFILL MESSAGE
+  // =========================================================
+  const searchParams = useSearchParams();
+  const searchedTerm = searchParams.get("search");
+
+  useEffect(() => {
+    if (searchedTerm) {
+      setMessage(prev => prev || `I'm looking for: ${searchedTerm}`);
+      scrollToForm();
+    }
+  }, [searchedTerm]);  
 
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId);
 
