@@ -6,6 +6,7 @@ import "@fontsource/inter/700.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/cookieBanner";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Black and White Spares",
@@ -35,11 +36,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Footer />
 
-        {/* Cookie Banner appears across all pages */}
         <CookieBanner />
+
+        <Analytics />
       </body>
     </html>
   );
 }
+
 
 
