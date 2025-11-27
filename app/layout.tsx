@@ -6,7 +6,10 @@ import "@fontsource/inter/700.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/cookieBanner";
+
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 
 export const metadata = {
   title: "Black and White Spares",
