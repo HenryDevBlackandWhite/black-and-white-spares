@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 
@@ -18,28 +17,28 @@ export default function Contact() {
   const [errorMsg, setErrorMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // Get updated URL params on every search
-  const searchParams = useSearchParams();
-
   // =========================================================
   // READ SEARCH TERM FROM URL AND PREFILL MESSAGE
-  // WORKS EVEN WHEN ALREADY ON CONTACT PAGE
+  // (WORKS EVEN WHEN ALREADY ON CONTACT PAGE)
   // =========================================================
   useEffect(() => {
-    const searchedTerm = searchParams.get("search");
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const searchedTerm = params.get("search");
 
     if (searchedTerm) {
-      setMessage((prev) => prev || `I'm looking for: ${searchedTerm}`);
+      setMessage(prev => prev || `I'm looking for: ${searchedTerm}`);
 
       const el = document.getElementById("contact-form");
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
-  }, [searchParams]); // ← FIX: runs anytime the search query changes
+  }, []);
 
   // =========================================================
   // FORM SUBMIT
   // =========================================================
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e:any) {
     e.preventDefault();
     setSubmitting(true);
     setErrorMsg("");
@@ -65,8 +64,10 @@ export default function Contact() {
       setPhone("");
       setEmail("");
       setMessage("");
-    } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong.");
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Something went wrong.";
+      setErrorMsg(errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -122,7 +123,7 @@ export default function Contact() {
             <input
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
             />
           </div>
@@ -133,7 +134,7 @@ export default function Contact() {
             <input
               type="text"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={e => setPhone(e.target.value)}
               className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
             />
           </div>
@@ -144,7 +145,7 @@ export default function Contact() {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
             />
           </div>
@@ -155,7 +156,7 @@ export default function Contact() {
             <textarea
               rows={5}
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={e => setMessage(e.target.value)}
               className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
             />
           </div>
@@ -203,7 +204,7 @@ export default function Contact() {
         className="rounded-lg overflow-hidden border border-neutral-800"
       >
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d39740.504178991985!2d28.254056424797646!3d-25.902945681039746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sPlot%20175%2032nd%20St%2C%20Doornkloof%20East%2C%20Pretoria%2C%200153%20google%20maps%20embed!5e1!3m2!1sen!2sza!4v1762420348744!5m2!1sen!2sza"
+          src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d39740.504178991985!2d28.254056424797646!3d-25.902945681039746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!!(...)"
           width="100%"
           height="400"
           style={{ border: 0 }}
@@ -214,4 +215,5 @@ export default function Contact() {
     </main>
   );
 }
+
 
