@@ -10,7 +10,6 @@ import CookieBanner from "@/components/cookieBanner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-
 export const metadata = {
   title: "Black and White Spares",
   description: "Trusted truck and plant spares supplier",
@@ -42,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieBanner />
 
         <Analytics />
+        <SpeedInsights />  
       </body>
     </html>
   );
