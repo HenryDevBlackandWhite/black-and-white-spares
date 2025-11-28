@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation"; 
 
 export default function Products() {
   // =========================================================
@@ -187,18 +186,21 @@ We support the full range of Sino HOWO and A7 truck parts.
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-   // =========================================================
-  // NEW: READ SEARCH TERM FROM URL AND PREFILL MESSAGE
-  // =========================================================
-  const searchParams = useSearchParams();
-  const searchedTerm = searchParams.get("search");
+    // =========================================================
+    // READ SEARCH TERM FROM URL AND PREFILL MESSAGE (no Next hook)
+    // =========================================================
+    useEffect(() => {
+      if (typeof window === "undefined") return;
 
-  useEffect(() => {
-    if (searchedTerm) {
-      setMessage(prev => prev || `I'm looking for: ${searchedTerm}`);
-      scrollToForm();
-    }
-  }, [searchedTerm]);  
+      const params = new URLSearchParams(window.location.search);
+      const searchedTerm = params.get("search");
+
+      if (searchedTerm) {
+        setMessage(prev => prev || `I'm looking for: ${searchedTerm}`);
+        scrollToForm();
+      }
+    }, []);
+ 
 
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId);
 
