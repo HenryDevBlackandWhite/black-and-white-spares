@@ -40,7 +40,7 @@ export default function SearchBar() {
         setResults([]);
       } else if (query.trim() !== "") {
         const encoded = encodeURIComponent(query.trim());
-        router.push(`/products?search=${encoded}`); // ← FIXED
+        router.push(`/contact?search=${encoded}`); // ← NEW: go to contact page
         setQuery("");
         setResults([]);
       }

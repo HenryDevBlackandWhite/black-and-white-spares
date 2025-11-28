@@ -1,9 +1,80 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 
 export default function Contact() {
+  // =========================================================
+  // FORM STATE
+  // =========================================================
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  // Get updated URL params on every search
+  const searchParams = useSearchParams();
+
+  // =========================================================
+  // READ SEARCH TERM FROM URL AND PREFILL MESSAGE
+  // WORKS EVEN WHEN ALREADY ON CONTACT PAGE
+  // =========================================================
+  useEffect(() => {
+    const searchedTerm = searchParams.get("search");
+
+    if (searchedTerm) {
+      setMessage((prev) => prev || `I'm looking for: ${searchedTerm}`);
+
+      const el = document.getElementById("contact-form");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [searchParams]); // ← FIX: runs anytime the search query changes
+
+  // =========================================================
+  // FORM SUBMIT
+  // =========================================================
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    if (!name || !email) {
+      setErrorMsg("Please enter your name and email.");
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/contact-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, email, message }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send message.");
+
+      setSuccessMsg("Your message has been sent successfully.");
+      setName("");
+      setPhone("");
+      setEmail("");
+      setMessage("");
+    } catch (err: any) {
+      setErrorMsg(err.message || "Something went wrong.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  // =========================================================
+  // CONTACT INFO
+  // =========================================================
   const contactInfo = [
     { icon: Phone, label: "Call", text: "+27 (0)11 123 4567" },
     { icon: Mail, label: "Email", text: "info@bwts.co.za" },
@@ -16,8 +87,8 @@ export default function Contact() {
   ];
 
   return (
-    <main className="max-w-5xl mx-auto space-y-16 text-center pt-28 pb-20 px-4">
-      {/* Header */}
+    <main className="max-w-5xl mx-auto space-y-16 pt-28 pb-20 px-4 text-center">
+      {/* HEADER */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -25,12 +96,84 @@ export default function Contact() {
       >
         <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
         <p className="text-gray-400 max-w-xl mx-auto">
-          Need a quote or have a question about our spares? Reach us through any
-          of the channels below.
+          Need a quote or have a question about our spares? Reach us through the form below
+          or any of the channels provided.
         </p>
       </motion.section>
 
-      {/* Contact Info Grid */}
+      {/* FORM SECTION */}
+      <motion.section
+        id="contact-form"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 space-y-6 text-left max-w-3xl mx-auto"
+      >
+        <h2 className="text-2xl font-semibold">Enquire now</h2>
+        <p className="text-gray-400 text-sm">
+          Send us your enquiry and our team will respond as soon as possible with pricing,
+          availability or assistance.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* NAME */}
+          <div>
+            <label className="block text-gray-300 mb-1">Your Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
+            />
+          </div>
+
+          {/* PHONE */}
+          <div>
+            <label className="block text-gray-300 mb-1">Phone Number</label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
+            />
+          </div>
+
+          {/* EMAIL */}
+          <div>
+            <label className="block text-gray-300 mb-1">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
+            />
+          </div>
+
+          {/* MESSAGE */}
+          <div>
+            <label className="block text-gray-300 mb-1">Your Message</label>
+            <textarea
+              rows={5}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white"
+            />
+          </div>
+
+          {errorMsg && <p className="text-red-400 text-sm">{errorMsg}</p>}
+          {successMsg && <p className="text-green-400 text-sm">{successMsg}</p>}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-3 rounded disabled:opacity-60"
+          >
+            {submitting ? "Sending..." : "Send Message"}
+          </button>
+        </form>
+      </motion.section>
+
+      {/* CONTACT INFO GRID */}
       <motion.section
         className="grid sm:grid-cols-2 md:grid-cols-4 gap-8"
         initial={{ opacity: 0, y: 20 }}
@@ -52,7 +195,7 @@ export default function Contact() {
         ))}
       </motion.section>
 
-      {/* Map Embed */}
+      {/* MAP */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -71,3 +214,4 @@ export default function Contact() {
     </main>
   );
 }
+

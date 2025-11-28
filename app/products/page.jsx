@@ -185,23 +185,7 @@ We support the full range of Sino HOWO and A7 truck parts.
     const el = document.getElementById("spare-form");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
-
-    // =========================================================
-    // READ SEARCH TERM FROM URL AND PREFILL MESSAGE (no Next hook)
-    // =========================================================
-    useEffect(() => {
-      if (typeof window === "undefined") return;
-
-      const params = new URLSearchParams(window.location.search);
-      const searchedTerm = params.get("search");
-
-      if (searchedTerm) {
-        setMessage(prev => prev || `I'm looking for: ${searchedTerm}`);
-        scrollToForm();
-      }
-    }, []);
  
-
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId);
 
   const allSpareOptions = selectedCategory
@@ -275,7 +259,7 @@ We support the full range of Sino HOWO and A7 truck parts.
       >
         <h1 className="text-4xl font-bold mb-4">Products</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          Our complete range of spares categorized for easy browsing.
+          This is not our full range of spares. Browse the categories below, or request any part directly using the form.
         </p>
       </motion.section>
 
