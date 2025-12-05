@@ -6,6 +6,7 @@ import "@fontsource/inter/700.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/cookieBanner";
+import BackToTop from "@/components/BackToTop";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="bg-brandBlack text-brandWhite font-sans flex flex-col min-h-screen">
+
         <Header />
 
         <main className="flex-1 w-full p-0 m-0">
@@ -37,15 +39,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
 
         <Footer />
-
         <CookieBanner />
 
+        <BackToTop />
+
         <Analytics />
-        <SpeedInsights />  
+        <SpeedInsights />
       </body>
     </html>
   );
 }
+
 
 
 
